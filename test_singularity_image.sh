@@ -2,16 +2,16 @@
 
 set -e
 
-# changing permissions to reflect singularityhub
-sudo chmod go-rwx -R .
-sudo chown root.root -R .
+# # changing permissions to reflect singularityhub
+# sudo chmod go-rwx -R .
+# sudo chown root.root -R .
 
 # build image
 sudo singularity build travis_test_build.simg Singularity
 
-# revert permissons to previous state (sortof)
-sudo chmod 777 -R .
-sudo chown travis.travis -R .
+# # revert permissons to previous state (sortof)
+# sudo chmod 777 -R .
+# sudo chown travis.travis -R .
 
 # move image to correct subdirectory
 mkdir -p images/dynverse
