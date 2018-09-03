@@ -29,7 +29,7 @@ else
 		# build singularity
 		pushd $SINGULARITY_DIR
 		./configure --prefix=/usr/local
-		make
+		make -j 2
 		popd
 	fi
 
