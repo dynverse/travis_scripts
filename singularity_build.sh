@@ -11,7 +11,7 @@ sudo singularity build travis_test_build.simg Singularity
 
 # revert permissons to previous state (sortof)
 sudo chmod 777 -R .
-sudo chmod travis.travis -R .
+sudo chown travis.travis -R .
 
 # move image to correct subdirectory
 mkdir dynverse
