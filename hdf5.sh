@@ -37,4 +37,4 @@ else
 	sudo cp $HDF5_DIR/include/* /usr/include/
 fi
 
-R -e 'install.packages("hdf5r")'
+R -e 'if ("hdf5r" %in% rownames(installed.packages())) update.packages(oldPkgs = "hdf5r", ask = FALSE) else install.packages("hdf5r")'
