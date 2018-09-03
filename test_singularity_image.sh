@@ -14,7 +14,7 @@ sudo chmod 777 -R .
 sudo chown travis.travis -R .
 
 # move image to correct subdirectory
-mkdir dynverse
+mkdir -p images/dynverse
 mv travis_test_build.simg dynverse
 
 # test image
@@ -24,7 +24,7 @@ library(dyntoy)
 
 source("example.R")
 
-config <- container_singularity()
+config <- container_singularity(prebuild = TRUE, images = "images/")
 
 meth <- create_ti_method_with_container("dynverse/travis_test_build", config = config)()
 
