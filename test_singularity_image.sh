@@ -15,7 +15,7 @@ sudo chown travis.travis -R .
 
 # move image to correct subdirectory
 mkdir -p images/dynverse
-mv travis_test_build.simg dynverse
+mv travis_test_build.simg images/dynverse
 
 # test image
 R --no-save << 'HERE'
