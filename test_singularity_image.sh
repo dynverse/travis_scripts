@@ -24,9 +24,9 @@ library(dyntoy)
 
 source("example.R")
 
-config <- container_singularity(prebuild = TRUE, images = "images/")
+options("dynwrap_run_environment" = "singularity", "dynwrap_singularity_images_folder" = paste0(getwd(), "/images/"))
 
-meth <- create_ti_method_with_container("dynverse/travis_test_build", config = config)()
+meth <- create_ti_method_with_container("dynverse/travis_test_build")()
 
-traj <- infer_trajectory(data, meth, params)
+traj <- infer_trajectory(data, meth, params, verbose = TRUE)
 HERE
