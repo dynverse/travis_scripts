@@ -2,4 +2,4 @@
 
 set -e
 
-docker build -t dynverse/travis_test_build
+docker build -t dynverse/travis_test_build .
