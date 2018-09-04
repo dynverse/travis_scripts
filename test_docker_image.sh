@@ -20,7 +20,7 @@ if (meth$id == "error") {
     stop("Expected error")
   }, error = function() {
     cat("All is well!")
-  }
+  })
 } else {
   traj <- infer_trajectory(data, meth, params, verbose = TRUE)
 }
