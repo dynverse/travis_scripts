@@ -14,7 +14,7 @@ config <- container_docker()
 
 meth <- create_ti_method_with_container("dynverse/travis_test_build", config = config)()
 
-if (meth$id != "error") {
+if (meth$id == "error") {
   sink("/dev/null")
   out <- 
     tryCatch({
