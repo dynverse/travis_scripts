@@ -10,7 +10,7 @@ library(dyntoy)
 
 source("example.R")
 
-config <- container_docker()
+config <- dynwrap::container_create_docker_config()
 
 meth <- create_ti_method_with_container("dynverse/travis_test_build", config = config)()
 
