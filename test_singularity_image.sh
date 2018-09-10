@@ -22,11 +22,12 @@ R --no-save << 'HERE'
 library(dynwrap)
 library(dyntoy)
 library(dyneval)
+library(babelwhale)
 
 source("example.R")
 
-config <- dynwrap::container_create_docker_config()
-dynwrap::container_set_default_config(config)
+config <- babelwhale::create_docker_config()
+babelwhale::set_default_config(config)
 
 meth <- create_ti_method_with_container("dynverse/travis_test_build")()
 
