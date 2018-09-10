@@ -48,6 +48,6 @@ if (meth$id == "error") {
   if (out) stop("Expected an error!") else cat("All is well!\n")
 } else {
   eval <- dyneval::evaluate_ti_method(data, meth, params, metrics, verbose = TRUE)
-  print(eval$summary)
+  print(as.data.frame(eval$summary))
 }
 HERE
