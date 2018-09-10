@@ -26,7 +26,7 @@ library(babelwhale)
 
 source("example.R")
 
-config <- babelwhale::create_docker_config()
+config <- babelwhale::create_singularity_config(cache_dir = "~/singularitycache/", use_cache = TRUE)
 babelwhale::set_default_config(config)
 
 meth <- create_ti_method_with_container("dynverse/travis_test_build")()
