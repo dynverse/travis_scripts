@@ -2,16 +2,14 @@
 
 set -e
 
-# # changing permissions to reflect singularityhub
-# sudo chmod go-rwx -R .
-# sudo chown root.root -R .
+# append github pat to singularity recipe, a github pat is available in the environment
+if [ ! -z "$GITHUB_PAT" ]; then 
+  echo "%environment" >> Singularity
+  echo "export GITHUB_PAT=$GITHUB_PAT" >> Singularity
+fi
 
 # build image
 sudo singularity build travis_test_build.simg Singularity
-
-# # revert permissons to previous state (sortof)
-# sudo chmod 777 -R .
-# sudo chown travis.travis -R .
 
 # move image to correct subdirectory
 mkdir -p images/dynverse
