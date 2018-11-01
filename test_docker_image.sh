@@ -3,7 +3,12 @@
 set -e
 
 # append github pat to dockerfile
-sed -i "/^FROM /a ENV GITHUB_PAT=$GITHUB_PAT" Dockerfile
+if [ ! -z "$GITHUB_PAT" ]; then 
+  echo GITHUB_PAT found!
+  sed -i "/^FROM /a ENV GITHUB_PAT=$GITHUB_PAT" Dockerfile
+else
+  echo No GITHUB_PAT found :(
+fi
 
 docker build -t dynverse/travis_test_build .
 
