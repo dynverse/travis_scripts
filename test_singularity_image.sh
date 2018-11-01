@@ -6,7 +6,8 @@ set -o xtrace
 # append github pat to recipe
 if [ ! -z "$GITHUB_PAT" ]; then 
   echo "GITHUB_PAT found!"
-  sed -i "s#install_github(#install_github(auth_token = '$GITHUB_PAT', #" Singularity
+  sed -i "s#^RUN #&GITHUB_PAT='$GITHUB_PAT' #" Dockerfile
+  R -e 'babelwhale::convert_dockerfile_to_singularityrecipe("Dockerfile", "Singularity")'
 else
   echo "No GITHUB_PAT found :("
 fi

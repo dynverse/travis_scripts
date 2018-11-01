@@ -6,7 +6,7 @@ set -o xtrace
 # append github pat to dockerfile
 if [ ! -z "$GITHUB_PAT" ]; then 
   echo "GITHUB_PAT found!"
-  sed -i "s#install_github(#install_github(auth_token = '$GITHUB_PAT', #" Singularity
+  sed -i "s#^RUN #&GITHUB_PAT='$GITHUB_PAT' #" Dockerfile
 else
   echo "No GITHUB_PAT found :("
 fi
