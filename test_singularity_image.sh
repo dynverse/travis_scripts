@@ -3,10 +3,7 @@
 set -e
 
 # append github pat to singularity recipe, a github pat is available in the environment
-if [ ! -z "$GITHUB_PAT" ]; then 
-  echo "%environment" >> Singularity
-  echo "export GITHUB_PAT=$GITHUB_PAT" >> Singularity
-fi
+sed -i "/^From: /a %environment\n\ \ \ \ export GITHUB_PAT=$GITHUB_PAT" Singularity
 
 # build image
 sudo singularity build travis_test_build.simg Singularity
