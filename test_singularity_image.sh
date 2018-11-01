@@ -4,10 +4,10 @@ set -e
 
 # append github pat to recipe
 if [ ! -z "$GITHUB_PAT" ]; then 
-  echo GITHUB_PAT found!
+  echo "GITHUB_PAT found!"
   sed -i "/^From: /a %environment\n\ \ \ \ export GITHUB_PAT=$GITHUB_PAT" Singularity
 else
-  echo No GITHUB_PAT found :(
+  echo "No GITHUB_PAT found :("
 fi
 
 # build image
