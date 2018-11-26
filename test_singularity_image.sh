@@ -31,7 +31,7 @@ source("example.R")
 config <- babelwhale::create_singularity_config(cache_dir = "images/", use_cache = TRUE)
 babelwhale::set_default_config(config)
 
-meth <- create_ti_method_with_container("dynverse/travis_test_build")()
+meth <- create_ti_method_container("dynverse/travis_test_build")()
 
 metrics <- c("correlation", "edge_flip", "him", "F1_branches", "featureimp_cor", "featureimp_wcor")
 
