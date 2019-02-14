@@ -28,7 +28,7 @@ library(babelwhale)
 
 source("example.R")
 
-config <- babelwhale::create_singularity_config(cache_dir = "images/", use_cache = TRUE)
+config <- babelwhale::create_singularity_config(cache_dir = "images/")
 babelwhale::set_default_config(config)
 
 meth <- create_ti_method_container("dynverse/travis_test_build")()
