@@ -86,33 +86,33 @@ install_hdf5() {
   echo $HDF5_VERSION
 
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then # use homebrew version
-	  echo "installing hdf5"
-	  brew update
-	  brew install hdf5 || true
-	  echo "brew install finished"
+    echo "installing hdf5"
+    brew update
+    brew install hdf5 || true
+    echo "brew install finished"
   else 
-	  if [ -z ${HDF5_DIR+x} ]; then
-	      echo "Using OS HDF5"
-	  else
-	      echo "Using downloaded HDF5"
-	      if [ -f $HDF5_DIR/lib/libhdf5.so ]; then
-		      echo "using cached build"
-	      else
-		  pushd /tmp
-		  wget https://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$HDF5_VERSION/src/hdf5-$HDF5_VERSION.tar.gz
-		  tar -xzvf hdf5-$HDF5_VERSION.tar.gz
-		  pushd hdf5-$HDF5_VERSION
-		  chmod u+x autogen.sh
-		  ./configure --prefix $HDF5_DIR
-		  make -j 2
-		  make install
-		  popd
-		  popd
-	      fi
-	  fi
-	  sudo cp $HDF5_DIR/bin/* /usr/bin/
-	  sudo cp $HDF5_DIR/lib/* /usr/lib/
-	  sudo cp $HDF5_DIR/include/* /usr/include/
+    if [ -z ${HDF5_DIR+x} ]; then
+        echo "Using OS HDF5"
+    else
+        echo "Using downloaded HDF5"
+        if [ -f $HDF5_DIR/lib/libhdf5.so ]; then
+          echo "using cached build"
+        else
+      pushd /tmp
+      wget https://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$HDF5_VERSION/src/hdf5-$HDF5_VERSION.tar.gz
+      tar -xzvf hdf5-$HDF5_VERSION.tar.gz
+      pushd hdf5-$HDF5_VERSION
+      chmod u+x autogen.sh
+      ./configure --prefix $HDF5_DIR
+      make -j 2
+      make install
+      popd
+      popd
+        fi
+    fi
+    sudo cp $HDF5_DIR/bin/* /usr/bin/
+    sudo cp $HDF5_DIR/lib/* /usr/lib/
+    sudo cp $HDF5_DIR/include/* /usr/include/
   fi
 
   R -e 'if ("hdf5r" %in% rownames(installed.packages())) update.packages(oldPkgs = "hdf5r", ask = FALSE) else install.packages("hdf5r")'
@@ -132,14 +132,14 @@ install_phantomjs() {
   phantomjs --version
 
   if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then 
-	  echo "installing phantomjs"
-	  rm -rf $PHANTOMJS_DIR
-	  mkdir -p $PHANTOMJS_DIR
-	  pushd /tmp
-	  wget https://github.com/Medium/phantomjs/releases/download/v$PHANTOMJS_VERSION/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2
-	  tar -xvf phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 -C $PHANTOMJS_DIR
-	  popd
-	  hash -r
+    echo "installing phantomjs"
+    rm -rf $PHANTOMJS_DIR
+    mkdir -p $PHANTOMJS_DIR
+    pushd /tmp
+    wget https://github.com/Medium/phantomjs/releases/download/v$PHANTOMJS_VERSION/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2
+    tar -xvf phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 -C $PHANTOMJS_DIR
+    popd
+    hash -r
   fi
   phantomjs --version
 }
@@ -180,31 +180,31 @@ install_singularity_2_5() {
   echo $SINGULARITY_DIR
 
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then # use homebrew version
-	  echo "Panic!"
+    echo "Panic!"
   else
-	  # install build requirements
-	  sudo apt-get update
-	  sudo apt-get install -y squashfs-tools libarchive-dev build-essential
+    # install build requirements
+    sudo apt-get update
+    sudo apt-get install -y squashfs-tools libarchive-dev build-essential
 
-	  if [ -f $SINGULARITY_DIR/bin/singularity ]; then
-		  echo "using cached build"
-	  else
-		  # download singularity
-		  pushd /tmp
-		  wget "https://github.com/singularityware/singularity/releases/download/${SINGULARITY_VERSION}/singularity-${SINGULARITY_VERSION}.tar.gz"
-		  tar -xvf "singularity-${SINGULARITY_VERSION}.tar.gz" -C "$HOME/.cache"
-		  popd
-		  
-		  # build singularity
-		  pushd $SINGULARITY_DIR
-		  ./configure --prefix=/usr/local
-		  make -j 2
-		  popd
-	  fi
+    if [ -f $SINGULARITY_DIR/bin/singularity ]; then
+      echo "using cached build"
+    else
+      # download singularity
+      pushd /tmp
+      wget "https://github.com/singularityware/singularity/releases/download/${SINGULARITY_VERSION}/singularity-${SINGULARITY_VERSION}.tar.gz"
+      tar -xvf "singularity-${SINGULARITY_VERSION}.tar.gz" -C "$HOME/.cache"
+      popd
+      
+      # build singularity
+      pushd $SINGULARITY_DIR
+      ./configure --prefix=/usr/local
+      make -j 2
+      popd
+    fi
 
-	  # install Singularity
-	  pushd $SINGULARITY_DIR
-	  sudo make install
-	  popd
+    # install Singularity
+    pushd $SINGULARITY_DIR
+    sudo make install
+    popd
   fi
 }
