@@ -12,10 +12,12 @@ if ("$package" %in% rownames(installed.packages())) {
 }
 HERE
 }
+
 install_github() {
   local repo=$1
   R -e "devtools::install_github('$repo')"
 }
+
 install_github_withdeps() {
   local repo=$1
   R -e "devtools::install_github('$repo', dep = TRUE, upgrade = TRUE)"
