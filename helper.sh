@@ -1,4 +1,26 @@
 ##############################
+##             R            ##
+##############################
+install_cran() {
+  local package=$1
+  R --no-save << HERE
+options(repos = "https://cloud.r-project.org/")
+if ("$package" %in% rownames(installed.packages())) {
+  update.packages(oldPkgs = "$package", ask = FALSE) 
+} else {
+  install.packages("$package")
+}
+HERE
+}
+install_github() {
+  local repo=$1
+  R -e "devtools::install_github('$repo')"
+}
+install_github_withdeps() {
+  local repo=$1
+  R -e "devtools::install_github('$repo', dep = TRUE, upgrade = TRUE)"
+}
+##############################
 ##          DOCKER          ##
 ##############################
 update_docker() {
