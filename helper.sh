@@ -15,12 +15,12 @@ HERE
 
 install_github() {
   local repo=$1
-  R -e "devtools::install_github('$repo')"
+  R -e "setRepositories(ind = 1:4); devtools::install_github('$repo')"
 }
 
 install_github_withdeps() {
   local repo=$1
-  R -e "devtools::install_github('$repo', dep = TRUE, upgrade = TRUE)"
+  R -e "setRepositories(ind = 1:4); devtools::install_github('$repo', dep = TRUE, upgrade = TRUE)"
 }
 install_withdeps() {
   R -e 'setRepositories(ind = 1:4); devtools::install(dependencies = TRUE, upgrade = TRUE)'
