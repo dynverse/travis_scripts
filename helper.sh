@@ -124,7 +124,7 @@ install_hdf5() {
     sudo cp $HDF5_DIR/include/* /usr/include/
   fi
 
-  R -e 'if ("hdf5r" %in% rownames(installed.packages())) update.packages(oldPkgs = "hdf5r", ask = FALSE) else install.packages("hdf5r")'
+  install_cran hdf5r
 }
 
 ##############################
