@@ -22,6 +22,13 @@ install_github_withdeps() {
   local repo=$1
   R -e "devtools::install_github('$repo', dep = TRUE, upgrade = TRUE)"
 }
+
+use_dynverse_devel() {
+  sedi () { sed --version >/dev/null 2>&1 && sed -i -- "$@" || sed -i "" "$@" ; }
+  if [ `git branch | grep '* master' | wc -l` == 0 ]; then
+    sedi 's#\(dynverse/[^, @]*\)#\1@devel#' 'DESCRIPTION'
+  fi
+}
 ##############################
 ##          DOCKER          ##
 ##############################
