@@ -1,0 +1,36 @@
+language: r
+dist: trusty
+sudo: true
+os:
+  - linux
+cache:
+  directories:
+    - $HOME/.cache # hdf5
+    - $HOME/R/Library
+services:
+- docker
+before_install:
+- source credentials
+- source <(curl -sSL https://raw.githubusercontent.com/dynverse/travis_scripts/master/helper.sh)
+install:
+- set -e
+- update_docker
+- install_hdf5
+- install_cran devtools
+- install_github_withdeps dynverse/dynwrap
+- install_github_withdeps dynverse/dyntoy
+- install_github_withdeps dynverse/dyncli
+script:
+- source version
+- build_docker
+- test_docker
+after_success:
+- push_docker
+jobs:
+  include:
+    - stage: cache
+      script:
+        - echo Do not build or test docker since this is a cache warmup
+      after_success:
+        - echo Do not push docker since this is a cache warmup
+    - stage: build
