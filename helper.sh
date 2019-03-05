@@ -47,7 +47,7 @@ build_docker() {
 test_docker() {
   Rscript example.R /tmp/example.h5
   sudo docker run -v /tmp:/mnt $TRAVIS_REPO_SLUG:v$VERSION --dataset /mnt/example.h5 --output /mnt/output.h5
-  Rscript -e 'dynplot::plot_graph(dyncli::read_h5("/tmp/output.h5"))'
+  Rscript -e 'names(dynwrap::calculate_trajectory_dimred(dyncli::read_h5("/tmp/output.h5")))'
 }
 
 push_docker() {
