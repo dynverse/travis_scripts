@@ -45,39 +45,8 @@ build_docker() {
 }
 
 test_docker() {
-R --no-save << HERE
-library(dynwrap)
-library(dyntoy)
-library(dyneval)
-library(babelwhale)
-
-source("example.R")
-
-config <- babelwhale::create_docker_config()
-babelwhale::set_default_config(config)
-
-meth <- create_ti_method_container("$TRAVIS_REPO_SLUG")()
-
-metrics <- c("correlation", "him", "F1_branches", "featureimp_wcor")
-
-if (meth$id == "error") {
-  sink("/dev/null")
-  out <- 
-    tryCatch({
-      sink("/dev/null")
-      eval <- dyneval::evaluate_ti_method(data, meth, params)
-      TRUE
-    }, error = function(e) {
-      FALSE
-    })
-  sink()
-  sink()
-  if (out) stop("Expected an error!") else cat("All is well!\n")
-} else {
-  eval <- dyneval::evaluate_ti_method(data, meth, params, metrics, verbose = TRUE)
-  print(as.data.frame(eval$summary))
-}
-HERE
+  Rscript example.R /tmp/example.h5
+  sudo docker run -v /tmp:/mnt $TRAVIS_REPO_SLUG:v$VERSION --dataset /mnt/example.h5 --output /mnt/output.h5
 }
 
 push_docker() {
