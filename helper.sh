@@ -2,7 +2,7 @@
 ##             R            ##
 ##############################
 install_cran() {
-  local package=$1
+  for package in "$@"; do
   R --no-save << HERE
 options(repos = c(CRAN = "http://cran.rstudio.com"))
 if ("$package" %in% rownames(installed.packages())) {
@@ -11,19 +11,28 @@ if ("$package" %in% rownames(installed.packages())) {
   install.packages("$package")
 }
 HERE
+  done
 }
 
 install_github() {
-  local repo=$1
-  R -e "setRepositories(ind = 1:4); devtools::install_github('$repo')"
+  for repo in "$@"; do
+    R -e "setRepositories(ind = 1:4); remotes::install_github('$repo')"
+  done
+}
+
+install_bioc() {
+  for package in "$@"; do
+    R -e "setRepositories(ind = 1:4); remotes::install_bioc('$package')"
+  done
 }
 
 install_github_withdeps() {
-  local repo=$1
-  R -e "setRepositories(ind = 1:4); devtools::install_github('$repo', dep = TRUE, upgrade = TRUE)"
+  for repo in "$@"; do
+    R -e "setRepositories(ind = 1:4); remotes::install_github('$repo', dep = TRUE, upgrade = TRUE)"
+  done
 }
 install_withdeps() {
-  R -e 'setRepositories(ind = 1:4); devtools::install(dependencies = TRUE, upgrade = TRUE)'
+  R -e 'setRepositories(ind = 1:4); remotes::install(dependencies = TRUE, upgrade = TRUE)'
 }
 use_dynverse_devel() {
   sedi () { sed --version >/dev/null 2>&1 && sed -i -- "$@" || sed -i "" "$@" ; }
