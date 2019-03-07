@@ -39,21 +39,48 @@ update_docker() {
   sudo apt-get install --only-upgrade docker-ce -y
 }
 
+test_docker_variables() {
+  if [ -z "$GITHUB_PAT" ]; then
+    echo "Warning: variable GITHUB_PAT not found. It is strongly recommended to set configure a GITHUB_PAT."
+  fi
+
+  if [ -z "$REPO" ]; then
+    echo "variable REPO not found, defaulting to TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG."
+    export REPO=$TRAVIS_REPO_SLUG
+  fi
+  
+  if [ -z "$VERSION" ]; then
+    echo "Error: variable VERSION not found."
+    exit 1
+  fi
+}
+
 build_docker() {
-  sudo docker build --build-arg GITHUB_PAT=${GITHUB_PAT} -t $TRAVIS_REPO_SLUG:v$VERSION .
-  docker tag $TRAVIS_REPO_SLUG:v$VERSION $TRAVIS_REPO_SLUG:latest
+  test_docker_variables
+  sudo docker build --build-arg GITHUB_PAT=$GITHUB_PAT -t $REPO:v$VERSION .
+  docker tag $REPO:v$VERSION $REPO:latest
 }
 
 test_docker() {
+  test_docker_variables
   Rscript example.R /tmp/example.h5
-  sudo docker run -v /tmp:/mnt $TRAVIS_REPO_SLUG:v$VERSION --dataset /mnt/example.h5 --output /mnt/output.h5
+  sudo docker run -v /tmp:/mnt $REPO:v$VERSION --dataset /mnt/example.h5 --output /mnt/output.h5
   Rscript -e 'names(dynwrap::calculate_trajectory_dimred(dyncli::read_h5("/tmp/output.h5")))'
+  sudo rm /tmp/example.h5 /tmp/output.h5
 }
 
 push_docker() {
+  if [ -z "$DOCKER_USERNAME" ]; then
+    echo "Error: variable DOCKER_USERNAME not found."
+    exit 1
+  fi
+  if [ -z "$DOCKER_PASSWORD" ]; then
+    echo "Error: variable DOCKER_PASSWORD not found."
+    exit 1
+  fi
   if [[ "$TRAVIS_BRANCH" == "master" ]]; then
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    docker push $TRAVIS_REPO_SLUG
+    docker push $REPO
   fi
 }
 
