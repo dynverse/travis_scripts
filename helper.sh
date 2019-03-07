@@ -32,7 +32,7 @@ install_github_withdeps() {
   done
 }
 install_withdeps() {
-  R -e 'setRepositories(ind = 1:4); remotes::install(dependencies = TRUE, upgrade = TRUE)'
+  R -e 'setRepositories(ind = 1:4); devtools::install(dependencies = TRUE, upgrade = TRUE)'
 }
 use_dynverse_devel() {
   sedi () { sed --version >/dev/null 2>&1 && sed -i -- "$@" || sed -i "" "$@" ; }
