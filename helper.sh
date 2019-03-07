@@ -4,7 +4,7 @@
 install_cran() {
   local package=$1
   R --no-save << HERE
-options(repos = "https://cloud.r-project.org/")
+options(repos = c(CRAN = "http://cran.rstudio.com"))
 if ("$package" %in% rownames(installed.packages())) {
   update.packages(oldPkgs = "$package", ask = FALSE) 
 } else {
