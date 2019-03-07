@@ -17,9 +17,7 @@ install:
 - update_docker
 - install_hdf5
 - install_cran remotes
-- install_github_withdeps dynverse/dynwrap@singularity3
-- install_github_withdeps dynverse/dyntoy
-- install_github_withdeps dynverse/dyncli
+- install_github_withdeps dynverse/dynwrap@singularity3 dynverse/dyntoy dynverse/dyncli
 script:
 - source version
 - build_docker
