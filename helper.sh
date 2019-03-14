@@ -67,7 +67,9 @@ test_docker_variables() {
 build_docker() {
   test_docker_variables
   sudo docker build --build-arg GITHUB_PAT=$GITHUB_PAT -t $REPO:v$VERSION .
-  docker tag $REPO:v$VERSION $REPO:latest
+  if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+    docker tag $REPO:v$VERSION $REPO:latest
+  fi
 }
 
 test_docker() {
@@ -89,10 +91,10 @@ push_docker() {
     echo "Error: variable DOCKER_PASSWORD not found."
     exit 1
   fi
-  if [[ "$TRAVIS_BRANCH" == "master" ]]; then
-    docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    docker push $REPO
-  fi
+  # if [[ "$TRAVIS_BRANCH" == "master" ]]; then
+  docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  docker push $REPO
+  # fi
 }
 
 ##############################
