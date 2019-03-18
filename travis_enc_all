@@ -1,0 +1,10 @@
+rm .travis.yml
+wget https://raw.githubusercontent.com/dynverse/travis_scripts/master/.travis.yml
+
+if [ $# -eq 0 ]; then
+  cp ~/credentials credentials && travis encrypt-file credentials --add --force
+else
+  cp ~/credentials credentials && travis encrypt-file credentials --add --force --repo $1
+fi
+
+rm credentials
