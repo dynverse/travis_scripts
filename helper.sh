@@ -76,7 +76,7 @@ test_docker() {
   test_docker_variables
   Rscript example.sh /tmp/example.h5
   if [ "$REPO" != "dynverse/ti_error" ]; then 
-    sudo docker run -v /tmp:/mnt $REPO:v$VERSION --dataset /mnt/example.h5 --output /mnt/output.h5 --verbose 3
+    sudo docker run -v /tmp:/mnt $REPO:v$VERSION --dataset /mnt/example.h5 --output /mnt/output.h5 --verbosity 3
     Rscript -e 'names(dynwrap::calculate_trajectory_dimred(dynutils::read_h5("/tmp/output.h5")))'
     sudo rm /tmp/example.h5 /tmp/output.h5
   fi
