@@ -36,7 +36,7 @@ install_withdeps() {
 }
 use_dynverse_devel() {
   sedi () { sed --version >/dev/null 2>&1 && sed -i -- "$@" || sed -i "" "$@" ; }
-  if [ `git branch | grep '* master' | wc -l` == 0 ]; then
+  if [ "$TRAVIS_BRANCH" == 0 ]; then
     sedi 's#\(dynverse/[^, @]*\)\([, ]*\)$#\1@devel\2#' 'DESCRIPTION'
   fi
   cat DESCRIPTION
