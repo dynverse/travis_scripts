@@ -39,6 +39,7 @@ use_dynverse_devel() {
   if [ `git branch | grep '* master' | wc -l` == 0 ]; then
     sedi 's#\(dynverse/[^, @]*\)\([, ]*\)$#\1@devel\2#' 'DESCRIPTION'
   fi
+  cat DESCRIPTION
 }
 ##############################
 ##          DOCKER          ##
