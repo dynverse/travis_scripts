@@ -36,7 +36,7 @@ install_withdeps() {
 }
 use_dynverse_devel() {
   sedi () { sed --version >/dev/null 2>&1 && sed -i -- "$@" || sed -i "" "$@" ; }
-  if [ "$TRAVIS_BRANCH" -ne "master" ] ; then
+  if [ "$TRAVIS_BRANCH" != "master" ] ; then
     sedi 's#\(dynverse/[^, @]*\)\([, ]*\)$#\1@devel\2#' 'DESCRIPTION'
   fi
   cat DESCRIPTION
