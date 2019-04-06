@@ -114,12 +114,9 @@ install_hdf5() {
     TMP_DIR=`mktemp -d`
     pushd $TMP_DIR
     wget https://github.com/dynverse/travis_hdf5/raw/v$HDF5_VERSION/build.tar.gz
-    tar -xvzf build.tar.gz
+    sudo tar -xvzf build.tar.gz -C /usr
     popd
 
-    sudo cp $TMP_DIR/bin/* /usr/bin/
-    sudo cp $TMP_DIR/lib/* /usr/lib/
-    sudo cp $TMP_DIR/include/* /usr/include/
     rm -rf $TMP_DIR
   fi
 
