@@ -111,13 +111,14 @@ install_hdf5() {
     echo "brew install finished"
   else 
     echo "Downloading and installing HDF5 $HDF5_VERSION"
-    TMP_DIR=`mktemp -d`
-    pushd $TMP_DIR
+    BUILD_DIR=$HOME/.hdf5build
+    mkdir $BUILD_DIR
+    pushd $BUILD_DIR
     wget https://github.com/dynverse/travis_hdf5/raw/v$HDF5_VERSION/build.tar.gz
-    sudo tar -xvzf build.tar.gz -C /usr
+    tar -xvzf build.tar.gz
+    rm build.tar.gz
+    sudo cp * /usr
     popd
-
-    rm -rf $TMP_DIR
   fi
 
   install_cran hdf5r
