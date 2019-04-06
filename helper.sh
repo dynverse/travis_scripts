@@ -120,7 +120,6 @@ install_hdf5() {
     sudo cp bin/* /usr/bin/
     sudo cp lib/* /usr/lib/
     sudo cp include/* /usr/include/
-    sudo cp share/* /usr/share/
     popd
   fi
 
