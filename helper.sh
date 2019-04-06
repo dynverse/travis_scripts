@@ -100,10 +100,9 @@ push_docker() {
 ##           HDF5           ##
 ##############################
 install_hdf5() {
-  export HDF5_DIR=$HOME/.cache/hdf5
-  echo $HDF5_DIR
-  export HDF5_VERSION=1.10.1
-  echo $HDF5_VERSION
+  if [ -z "$HDF5_VERSION" ]; then
+    export HDF5_VERSION=1.10.1
+  fi
 
   if [ "$TRAVIS_OS_NAME" == "osx" ]; then # use homebrew version
     echo "installing hdf5"
@@ -111,32 +110,23 @@ install_hdf5() {
     brew install hdf5 || true
     echo "brew install finished"
   else 
-    if [ -z ${HDF5_DIR+x} ]; then
-        echo "Using OS HDF5"
-    else
-        echo "Using downloaded HDF5"
-        if [ -f $HDF5_DIR/lib/libhdf5.so ]; then
-          echo "using cached build"
-        else
-      pushd /tmp
-      wget https://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$HDF5_VERSION/src/hdf5-$HDF5_VERSION.tar.gz
-      tar -xzvf hdf5-$HDF5_VERSION.tar.gz
-      pushd hdf5-$HDF5_VERSION
-      chmod u+x autogen.sh
-      ./configure --prefix $HDF5_DIR
-      make -j 2
-      make install
-      popd
-      popd
-        fi
-    fi
-    sudo cp $HDF5_DIR/bin/* /usr/bin/
-    sudo cp $HDF5_DIR/lib/* /usr/lib/
-    sudo cp $HDF5_DIR/include/* /usr/include/
+    echo "Downloading and installing HDF5 $HDF5_VERSION"
+    TMP_DIR=`mktemp -d`
+    pushd $TMP_DIR
+    wget https://github.com/dynverse/travis_hdf5/raw/v$HDF5_VERSION/build.tar.gz
+    tar -xvzf build.tar.gz
+    popd
+
+    sudo cp $TMP_DIR/bin/* /usr/bin/
+    sudo cp $TMP_DIR/lib/* /usr/lib/
+    sudo cp $TMP_DIR/include/* /usr/include/
+    popd
+    rm -rf $TMP_DIR
   fi
 
   install_cran hdf5r
 }
+
 
 ##############################
 ##         PHANTOMJS        ##
