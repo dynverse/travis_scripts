@@ -120,7 +120,6 @@ install_hdf5() {
     sudo cp $TMP_DIR/bin/* /usr/bin/
     sudo cp $TMP_DIR/lib/* /usr/lib/
     sudo cp $TMP_DIR/include/* /usr/include/
-    popd
     rm -rf $TMP_DIR
   fi
 
