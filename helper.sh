@@ -117,10 +117,10 @@ install_hdf5() {
     wget https://github.com/dynverse/travis_hdf5/raw/v$HDF5_VERSION/build.tar.gz
     tar -xvzf build.tar.gz
     rm build.tar.gz
-    sudo cp bin /usr
-    sudo cp include /usr
-    sudo cp lib /usr
-    sudo cp share /usr
+    sudo cp bin/* /usr/bin/
+    sudo cp lib/* /usr/lib/
+    sudo cp include/* /usr/include/
+    sudo cp share/* /usr/share/
     popd
   fi
 
