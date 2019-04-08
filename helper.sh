@@ -70,6 +70,7 @@ build_docker() {
   sudo docker build --build-arg GITHUB_PAT=$GITHUB_PAT -t $REPO:$TRAVIS_BRANCH .
   if [[ "$TRAVIS_BRANCH" == "master" ]]; then
     docker tag $REPO:$TRAVIS_BRANCH $REPO:v$VERSION
+    docker tag $REPO:$TRAVIS_BRANCH $REPO:latest
   fi
 }
 
