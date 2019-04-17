@@ -31,6 +31,11 @@ install_github_withdeps() {
     R -e "setRepositories(ind = 1:4); remotes::install_github('$repo', dep = TRUE, upgrade = TRUE)"
   done
 }
+install_github_withdeps_force() {
+  for repo in "$@"; do
+    R -e "setRepositories(ind = 1:4); remotes::install_github('$repo', dep = TRUE, upgrade = TRUE, force = TRUE)"
+  done
+}
 install_withdeps() {
   R -e 'setRepositories(ind = 1:4); devtools::install(dependencies = TRUE, upgrade = TRUE)'
 }
