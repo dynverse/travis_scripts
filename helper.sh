@@ -50,6 +50,7 @@ install_dynverse() {
   rm cache.tar*
   mv * $HOME/R/Library/
   popd
+  rm -r travis_package_cacher
 }
 ##############################
 ##          DOCKER          ##
