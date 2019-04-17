@@ -42,14 +42,20 @@ use_dynverse_devel() {
   cat DESCRIPTION
 }
 install_dynverse() {
-  git clone --branch cache-master https://github.com/dynverse/travis_package_cacher.git
+  if [ "$TRAVIS_BRANCH" = "master" ]
+  then
+      branch=master
+  else
+      branch=devel
+  fi
+  git clone --branch cache-${branch} https://github.com/dynverse/travis_package_cacher.git
   pushd travis_package_cacher
   cat cache.tar.gz.part-* > cache.tar.gz
   tar -zxf cache.tar.gz
   rm cache.tar*
-  mv * $HOME/R/Library/
+  cp -r * $HOME/R/Library/
   popd
-  rm -r travis_package_cacher
+  rm -rf travis_package_cacher
 }
 ##############################
 ##          DOCKER          ##
