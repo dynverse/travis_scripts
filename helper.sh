@@ -41,6 +41,16 @@ use_dynverse_devel() {
   fi
   cat DESCRIPTION
 }
+
+install_dynverse() {
+  git clone --branch cache-master https://github.com/dynverse/travis_package_cacher.git
+  pushd travis_package_cacher
+  cat cache.tar.gz.part-* > cache.tar.gz
+  tar -zxf cache.tar.gz
+  rm cache.tar*
+  mv * $HOME/R/Library/
+  popd
+}
 ##############################
 ##          DOCKER          ##
 ##############################
@@ -82,6 +92,10 @@ test_docker() {
     Rscript -e 'names(dynwrap::calculate_trajectory_dimred(dynutils::read_h5("/tmp/output.h5")))'
     sudo rm /tmp/example.h5 /tmp/output.h5
   fi
+}
+
+test_r() {
+
 }
 
 push_docker() {
