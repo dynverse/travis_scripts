@@ -47,7 +47,7 @@ use_dynverse_devel() {
   cat DESCRIPTION
 }
 install_dynverse() {
-  if [ "$TRAVIS_BRANCH" = "master" ] || [ "$TRAVIS_BRANCH" = "devel2master"]
+  if [ "$TRAVIS_BRANCH" = "master" ] || [ "$TRAVIS_BRANCH" = "devel2master" ]
   then
       branch=master
   else
