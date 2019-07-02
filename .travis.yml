@@ -16,6 +16,7 @@ install:
 - set -e
 - update_docker
 - install_hdf5
+- install_dynverse
 - install_cran remotes
 - install_github_withdeps dynverse/dynwrap dynverse/dyntoy
 script:
