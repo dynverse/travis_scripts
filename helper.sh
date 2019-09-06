@@ -97,7 +97,12 @@ build_docker() {
 
 test_docker() {
   test_docker_variables
-  Rscript example.sh /tmp/example.h5
+  # if example.sh does not exist, assume that the script is on the container at location /code/example.sh
+  if [ -f example.sh ]; then
+    Rscript example.sh /tmp/example.h5
+  else
+    sudo docker run --entrypoint /code/example.sh -v /tmp:/mnt $REPO:$TRAVIS_BRANCH /mnt/example.h5
+  fi
   if [ "$REPO" != "dynverse/ti_error" ]; then 
     sudo docker run -v /tmp:/mnt $REPO:$TRAVIS_BRANCH --dataset /mnt/example.h5 --output /mnt/output.h5 --verbosity 3
     Rscript -e 'names(dynwrap::calculate_trajectory_dimred(dynutils::read_h5("/tmp/output.h5")))'
