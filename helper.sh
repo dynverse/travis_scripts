@@ -47,7 +47,7 @@ use_dynverse_devel() {
   cat DESCRIPTION
 }
 install_dynverse() {
-  sudo wget http://security.ubuntu.com/ubuntu/pool/main/i/icu/libicu52_52.1-3ubuntu0.8_amd64.deb
+  wget http://security.ubuntu.com/ubuntu/pool/main/i/icu/libicu52_52.1-3ubuntu0.8_amd64.deb
   sudo dpkg -i libicu52_52.1-3ubuntu0.8_amd64.deb
   rm libicu52_52.1-3ubuntu0.8_amd64.deb
   if [ "$TRAVIS_BRANCH" = "master" ] || [ "$TRAVIS_BRANCH" = "devel2master" ]
