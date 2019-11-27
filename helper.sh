@@ -26,12 +26,6 @@ install_bioc() {
   done
 }
 
-install_cran() {
-  for package in "$@"; do
-    R -e "remotes::install_cran('$package')"
-  done
-}
-
 install_github_withdeps() {
   for repo in "$@"; do
     R -e "setRepositories(ind = 1:4); remotes::install_github('$repo', dep = TRUE, upgrade = TRUE)"
