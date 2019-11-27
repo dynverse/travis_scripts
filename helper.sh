@@ -22,7 +22,13 @@ install_github() {
 
 install_bioc() {
   for package in "$@"; do
-    R -e "setRepositories(ind = 1:4); remotes::install_bioc('$package')"
+    R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) install.packages('BiocManager'); BiocManager::install('$package')"
+  done
+}
+
+install_cran() {
+  for package in "$@"; do
+    R -e "remotes::install_cran('$package')"
   done
 }
 
