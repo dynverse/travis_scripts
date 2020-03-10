@@ -104,7 +104,7 @@ test_docker() {
   if [ -f example.R ]; then
     Rscript example.R /tmp/example.h5
   else
-    sudo docker run --entrypoint /code/example.R -v /tmp:/mnt $REPO:$TRAVIS_BRANCH /mnt/example.h5
+    sudo docker run --entrypoint /code/example.sh -v /tmp:/mnt $REPO:$TRAVIS_BRANCH /mnt/example.h5
   fi
   if [ "$REPO" != "dynverse/ti_error" ]; then 
     sudo docker run -v /tmp:/mnt $REPO:$TRAVIS_BRANCH --dataset /mnt/example.h5 --output /mnt/output.h5 --verbosity 3
