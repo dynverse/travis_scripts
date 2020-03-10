@@ -101,8 +101,8 @@ build_docker() {
 test_docker() {
   test_docker_variables
   # if example.sh does not exist, assume that the script is on the container at location /code/example.sh
-  if [ -f example.R ]; then
-    Rscript example.R /tmp/example.h5
+  if [ -f example.sh ]; then
+    Rscript example.sh /tmp/example.h5
   else
     sudo docker run --entrypoint /code/example.sh -v /tmp:/mnt $REPO:$TRAVIS_BRANCH /mnt/example.h5
   fi
