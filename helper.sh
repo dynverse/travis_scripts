@@ -247,3 +247,24 @@ install_singularity_2_5() {
     popd
   fi
 }
+
+install_r_3_5() {
+  sudo add-apt-repository -y "ppa:marutter/rrutter3.5"
+  sudo add-apt-repository -y "ppa:marutter/c2d4u3.5"
+  sudo add-apt-repository -y "ppa:ubuntugis/ppa"
+  sudo add-apt-repository -y "ppa:cran/travis"
+  travis_apt_get_update
+  sudo apt-get install -y --no-install-recommends build-essential gcc g++ libblas-dev liblapack-dev libncurses5-dev libreadline-dev libjpeg-dev libpcre3-dev libpng-dev zlib1g-dev libbz2-dev liblzma-dev libicu-dev cdbs qpdf texinfo libssh2-1-dev devscripts gfortran
+  curl -fLo /tmp/R-3.5.3-$(lsb_release -cs).xz https://travis-ci.rstudio.org/R-3.5.3-$(lsb_release -cs).xz
+  tar xJf /tmp/R-3.5.3-$(lsb_release -cs).xz -C ~
+  rm /tmp/R-3.5.3-$(lsb_release -cs).xz
+  sudo mkdir -p /usr/local/lib/R/site-library $R_LIBS_USER
+  sudo chmod 2777 /usr/local/lib/R /usr/local/lib/R/site-library $R_LIBS_USER
+  echo 'options(repos = c(CRAN = "https://cloud.r-project.org"))' > ~/.Rprofile.site
+  curl -fLo /tmp/texlive.tar.gz https://github.com/jimhester/ubuntu-bin/releases/download/latest/texlive.tar.gz
+  tar xzf /tmp/texlive.tar.gz -C ~
+  export PATH=${TRAVIS_HOME}/texlive/bin/x86_64-linux:$PATH
+  tlmgr update --self
+  sudo apt-get install -f
+  rm /tmp/pandoc-2.2-1-amd64.deb
+}
